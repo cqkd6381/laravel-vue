@@ -34,7 +34,7 @@ class TokenProxy
             ]);
         }
         return response()->json([
-            'status' => 'login false',
+            'message' => 'login false',
             'status_code' => 421,
             'entity' => 'Credentials not match'
         ], 421);
@@ -67,7 +67,7 @@ class TokenProxy
                 'refresh_token' => $token['refresh_token'],
                 'expires_in' => $token['expires_in'],
             ],
-            'status' => 'success',
+            'message' => 'success',
             'status_code' => 200
         ])
         ->cookie('refreshToken', $token['refresh_token'], 14400, null, null, false, true);
@@ -115,7 +115,7 @@ class TokenProxy
         $accessToken->revoke();
 
         return response()->json([
-            'status' => 'success',
+            'message' => 'success',
             'status_code' => 200,
             'entity' => 'logout success'
         ], 200);

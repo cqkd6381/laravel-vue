@@ -17,7 +17,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     $user = $request->user();
 
     return response()->json([
-        'status' => 'success',
+        'message' => 'success',
         'status_code' => 200,
         'entity' => [
             'name' => $user['name'],
@@ -31,3 +31,7 @@ Route::post('/register','Auth\RegisterController@register');
 Route::post('/login','Auth\LoginController@login');
 Route::post('/logout','Auth\LoginController@logout');
 Route::post('/token/refresh','Auth\LoginController@refresh');
+
+Route::middleware('auth:api')->group(function () {
+    Route::get('/test','TestController@test');
+});
