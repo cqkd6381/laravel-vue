@@ -19,3 +19,11 @@ export function userInfo() {
     method: 'get',
   })
 }
+
+// 登出
+export function logout() {
+  return fetch({
+    url: '/logout',
+    method: 'post'
+  })
+}

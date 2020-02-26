@@ -1,5 +1,5 @@
-import { login, userInfo } from '@/api/login'
-import { setToken, setRefreshToken } from '@/utils/auth'
+import { login, userInfo, logout } from '@/api/login'
+import { setToken, setRefreshToken, removeToken, removeRefreshToken } from '@/utils/auth'
 const user = {
   state: {
     authenticated: false,
@@ -51,6 +51,25 @@ const user = {
     RefreshToken() {
       console.log('该更新token喽')
       console.log('先把刷新token功能写好吧')
+    },
+    // 退出登录
+    logout({ commit }) {
+      return new Promise((resolve, reject) => {
+        logout().then(res => {
+          commit('SET_AUTH', false)
+          commit('SET_USER', {
+            name: null,
+            email: null,
+          })
+          // 删除Token
+          removeToken()
+          // 删除RefreshToken
+          removeRefreshToken()
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+      })
     }
   }
 }
