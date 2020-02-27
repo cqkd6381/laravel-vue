@@ -27,3 +27,11 @@ export function logout() {
     method: 'post'
   })
 }
+
+// 登出
+export function logs() {
+  return fetch({
+    url: '/logs',
+    method: 'get'
+  })
+}

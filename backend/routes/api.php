@@ -34,4 +34,5 @@ Route::post('/token/refresh','Auth\LoginController@refresh');
 
 Route::middleware('auth:api')->group(function () {
     Route::get('/test','TestController@test');
+    Route::resource('/logs','LogController');
 });

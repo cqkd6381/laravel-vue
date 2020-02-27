@@ -30,7 +30,7 @@ export default {
         })
         .then(res => {
           if (res.status_code === 200) {
-            this.$router.push({ name: "index" });
+            this.$router.push({ name: "user" });
           } else {
             // this.$message({
             //   type: "error",
