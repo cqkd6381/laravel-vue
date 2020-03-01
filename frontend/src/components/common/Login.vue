@@ -30,20 +30,14 @@ export default {
         })
         .then(res => {
           if (res.status_code === 200) {
-            this.$router.push({ name: "user" });
-          } else {
-            // this.$message({
-            //   type: "error",
-            //   message: res.message
-            // });
+            this.$router.push({ name: "userinfo" });
+          } else if (res.status_code === 421) {
+            this.$message.error(res.message);
           }
+        })
+        .catch(err => {
+          this.$message.error(err);
         });
-      // .catch(err => {
-      //   this.$message({
-      //     type: "error",
-      //     message: err
-      //   });
-      // });
     }
   }
 };

@@ -1,5 +1,5 @@
-import { login, userInfo, logout } from '@/api/login'
-import { setToken, setRefreshToken, removeToken, removeRefreshToken } from '@/utils/auth'
+import { login, userInfo, logout, refreshToken } from '@/api/login'
+import { setToken, getRefreshToken, setRefreshToken, removeToken, removeRefreshToken } from '@/utils/auth'
 const user = {
   state: {
     authenticated: false,
@@ -26,7 +26,7 @@ const user = {
             setToken(res.entity.token)
             setRefreshToken(JSON.stringify({
               refresh_token: res.entity.refresh_token,
-              expires_in: res.entity.expires_in,
+              expires_in: res.entity.expires_in * 1000 + (new Date()).getTime(),
             }))
           }
           resolve(res)
@@ -43,14 +43,27 @@ const user = {
           commit('SET_USER', res.entity)
           resolve(res)
         }).catch(() => {
-          dispatch('RefreshToken')
+          // dispatch('refreshToken')
         })
       })
     },
     // 刷新token
-    RefreshToken() {
-      console.log('该更新token喽')
-      console.log('先把刷新token功能写好吧')
+    refreshToken() {
+      return new Promise((resolve, reject) => {
+        const refresh = JSON.parse(getRefreshToken());
+        refreshToken(refresh.refresh_token).then(res => {
+          if(res.status_code === 200){
+            setToken(res.entity.token)
+            setRefreshToken(JSON.stringify({
+              refresh_token: res.entity.refresh_token,
+              expires_in: res.entity.expires_in * 1000 + (new Date()).getTime(),
+            }))
+          }
+          resolve(res)
+        }).catch(err =>{
+          reject(err)
+        })
+      })
     },
     // 退出登录
     logout({ commit }) {

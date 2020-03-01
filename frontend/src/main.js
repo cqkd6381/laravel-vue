@@ -5,10 +5,14 @@ import store from './store/store'
 import { getToken } from './utils/auth'
 import { whiteList } from '@/config/index.js';
 
+import Antd from 'ant-design-vue'
+import 'ant-design-vue/dist/antd.css'
+Vue.use(Antd)
+
 router.beforeEach((to, from, next) => {
   if (getToken()) {
     if (to.name === 'login') {
-      next({ name: 'user' })  // 如果已经登录了跳转到个人中心
+      next({ name: 'userinfo' })  // 如果已经登录了跳转到个人中心
     } else {
       if (store.state.user.authenticated) {
         next()

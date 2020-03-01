@@ -20,6 +20,17 @@ export function userInfo() {
   })
 }
 
+// 刷新token
+export function refreshToken(refresh_token) {
+  return fetch({
+    url: '/token/refresh',
+    method: 'post',
+    headers: {
+      refreshtoken: refresh_token
+    }
+  })
+}
+
 // 登出
 export function logout() {
   return fetch({
@@ -28,7 +39,7 @@ export function logout() {
   })
 }
 
-// 登出
+// 日志
 export function logs() {
   return fetch({
     url: '/logs',

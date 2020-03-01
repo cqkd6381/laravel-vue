@@ -11,20 +11,61 @@ export const constantRouterMap = [
   {
     path: '/login',
     name: 'login',
-    component: () => import('./components/Login'),
+    component: () => import('./components/common/Login'),
     meta: {}
   },
   {
-    path: '/index',
-    name: 'index',
-    component: () => import('./components/HelloWorld'),
-    meta: {}
+    path: '/',
+    redirect: '/statistic/global'
   },
   {
-    path: '/user',
-    name: 'user',
-    component: () => import('./components/UserInfo'),
-    meta: {}
+    path: '',
+    name: 'layout',
+    component: () => import('./components/common/Layout'),
+    meta: {},
+    children: [
+      {
+        path: '/statistic/global',
+        name: 'statistic_global',
+        component: () => import('./components/home/StatisticGlobal'),
+        meta: {}
+      },{
+        path: '/statistic/increment',
+        name: 'statistic_increment',
+        component: () => import('./components/home/StatisticIncrement'),
+        meta: {}
+      },
+      {
+        path: '/userinfo',
+        name: 'userinfo',
+        component: () => import('./components/common/UserInfo'),
+        meta: {}
+      },
+      {
+        path: '/user/list',
+        name: 'user_list',
+        component: () => import('./components/user/Index'),
+        meta: {}
+      },
+      {
+        path: '/setting/role',
+        name: 'setting_role',
+        component: () => import('./components/setting/RoleSetting'),
+        meta: {}
+      },
+      {
+        path: '/setting/user',
+        name: 'setting_user',
+        component: () => import('./components/setting/UserSetting'),
+        meta: {}
+      },
+      {
+        path: '/breadcrumb',
+        name: 'breadcrumb',
+        component: () => import('./components/common/Breadcrumb'),
+        meta: {}
+      }
+    ]
   }
 ]
 

@@ -1,5 +1,5 @@
 // 路由白名单
-export const whiteList = ['login', 'index'];
+export const whiteList = ['login'];
 
 // 系统配置参数
 export const config = {

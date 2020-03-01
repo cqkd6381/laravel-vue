@@ -37,7 +37,7 @@ class TokenProxy
             'message' => 'login false',
             'status_code' => 421,
             'entity' => 'Credentials not match'
-        ], 421);
+        ], 200);
     }
 
     /**
@@ -58,9 +58,9 @@ class TokenProxy
         $response = $this->http->post('http://' . $website . '/oauth/token', [
             'form_params' => $data
         ]);
-        
+
         $token = json_decode((string)$response->getBody(), true);
-        
+
         return response()->json([
             'entity' => [
                 'token' => $token['token_type'].' '.$token['access_token'],
@@ -69,8 +69,7 @@ class TokenProxy
             ],
             'message' => 'success',
             'status_code' => 200
-        ])
-        ->cookie('refreshToken', $token['refresh_token'], 14400, null, null, false, true);
+        ]);
     }
 
     /**
@@ -78,9 +77,7 @@ class TokenProxy
      */
     public function refresh()
     {
-        $refreshToken = request()->cookie('refreshToken');
-
-        // $refreshToken = request('refresh_token');
+         $refreshToken = request()->header('refreshtoken');
 
         // 验证refresh_token
 
@@ -109,8 +106,6 @@ class TokenProxy
             ->update([
                 'revoked' => true
             ]);
-
-        app('cookie')->queue(app('cookie')->forget('refreshToken'));
 
         $accessToken->revoke();
 
